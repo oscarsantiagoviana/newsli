@@ -60,7 +60,7 @@ at risk.
 ## Session lifecycle (FSM)
 
 `IDLE → ARMING → LIVE → DRAINING → COOLDOWN → IDLE` — full design in
-[docs/fsm-design.md](../docs/fsm-design.md). Resources are created only in
+[docs/fsm-design.md](https://github.com/oscarsantiagoviana/newsli/blob/main/docs/fsm-design.md). Resources are created only in
 ARMING; every reconfig (GPU, workScale, DRS, late guides) drains first.
 The game thread never waits on the FSM: not-LIVE = forward to native.
 

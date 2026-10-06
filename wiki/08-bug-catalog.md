@@ -115,7 +115,7 @@ y la lección. Ordenados por tema.
 
 ### B16 — protobuf "Failed to serialize proto" (ONNX)
 - **Causa**: initializers >2 GB embebidos (Constant de tamaño de frame).
-- **Fix**: cirugía ONNX (ver [06-tensorrt.md](06-tensorrt.md)) — escalares +
+- **Fix**: cirugía ONNX (ver [06-tensorrt-engine.md](06-tensorrt-engine.md)) — escalares +
   external data manual.
 
 ### B17 — venv sin pip
