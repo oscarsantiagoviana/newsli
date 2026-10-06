@@ -128,7 +128,7 @@ y la lección. Ordenados por tema.
   puntero crudo. Este bug produjo "guías a cero" durante toda la ronda.
 - **Grabar en la lista del juego después del evaluate** (barriers sobre sus
   texturas) corrompe el device a minutos: el runtime NGX nativo graba sus
-  propias transitions ahí. Síntoma: ERR_GFX_D3D_DEFERRED_MEM / EMP.dll AV /
+  propias transitions ahí. Síntoma: ERR_GFX_D3D_DEFERRED_MEM / crash del anti-tamper /
   nvwgf2umx.dll AV. Regla: nuestras grabaciones van en cmd list PROPIA
   sometida tras la del frame (hook de ECL).
 - **CopyTextureRegion prohíbe src ALLOW_DEPTH_STENCIL**: la depth DSV del

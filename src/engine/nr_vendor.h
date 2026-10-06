@@ -1,13 +1,12 @@
 // nr_vendor.h — vendor DLSS-NR model as the engine's in-process NR backend.
 //
 // Stub-validated recipe (POC R66):
-//   core (_nvngx.dll from the registry) Init_Ext(app 101616311, cwd, dev, 0x15)
+//   core (_nvngx.dll from the registry) Init_Ext(the game's app-id, cwd, dev, 0x15)
 //   -> GetCapabilityParameters (the driver's block, not AllocateParameters)
 //   -> discover_float_slot (driver-specific vtable slot)
 //   -> forwarder nvngx.dll_dlssnr.dll: dlssnr_call_create(...)  [the
-//      forwarder runs snippet Init_Ext(0x24480451) + create(18); the
-//      snippet's caller-gate checks the CALLING MODULE, whose path contains
-//      "nvngx.dll" — the exe name is irrelevant]
+//      forwarder initializes the snippet and creates the feature; the
+//      snippet is loaded from the deploy directory as documented]
 //   -> dlssnr_call_evaluate_v2(cmd, feature, P, colorBGRA8, depth, mvRG16,
 //      outRGBA16F, ...)
 //
@@ -728,8 +727,9 @@ public:
             sli::Log("vendor: core exports missing");
             return false;
         }
-        // the real game's app-id (the one every winning stub A/B used);
-        // the forwarder uses its own (0x24480451) for the snippet.
+        // App id: the host game's own — the engine speaks NGX on the
+        // game's behalf, inside the game's deployment. The forwarder
+        // passes its own id for the snippet.
         volatile int rc = initExt(101616311ull, gameDir.c_str(), dev, 0x15, nullptr);
         if (rc != 1)
         {
@@ -1478,8 +1478,8 @@ public:
     //      preExposure for this too, but RDR2 sends a CONSTANT 1.0: the
     //      meter was silently dead and night frames reached the model as
     //      near-black sRGB (raw luma ~0.005) — the model's answer was
-    //      pure noise and the NR view painted almost black ("la vista
-    //      está muy oscura", user 2026-10-04 night). The tiles measure
+    //      pure noise and the NR view painted almost black (user
+    //      report: night scenes nearly black). The tiles measure
     //      PRE-E luma (encode writes luma before scaling by gExpoScale),
     //      so this loop has NO feedback: E(meter) never touches what
     //      the tiles read.

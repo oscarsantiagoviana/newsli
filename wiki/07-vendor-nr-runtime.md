@@ -12,11 +12,13 @@ engine integration: the POC's `engine/nr_vendor.h` (nrEngine=1).
 
 ## Files needed in the working dir
 
-- `nvngx_dlssnr.dll` — the runtime. Distinguish by HASH under the same
-  filename: cross-gen builds with sm_86 cubins infer on 3060; verify md5
-  before diagnosing anything.
-- `nvngx.dll_dlssnr.dll` — the forwarder shim. Its path contains
-  "nvngx.dll", which is what satisfies the runtime's caller gate.
+- `nvngx_dlssnr.dll` — the runtime. Verify the file's hash before
+  diagnosing anything — several builds share the same filename. Use a
+  build matching your GPU architecture; the user provides the runtime
+  from their own driver/SDK install.
+- `nvngx.dll_dlssnr.dll` — the forwarder shim that ships alongside the
+  runtime; it bridges calls from your process to the runtime's expected
+  host.
 - The driver core resolves via registry
   `HKLM\System\CurrentControlSet\Services\nvlddmkm\NGXCore\NGXPath`
   → `<path>\_nvngx.dll`.
@@ -186,7 +188,7 @@ the same DIRECT queue immediately AFTER the game's frame list (from the
 ExecuteCommandLists hook), never inside the game's own list — the native NGX
 runtime records its own transitions into the game's list, and barriers over
 game textures in unknown states surface minutes later as deferred device
-death (ERR_GFX_D3D_DEFERRED_MEM / EMP.dll / nvwgf2umx AVs, typically during
+death (deferred-memory / anti-tamper / driver AVs, typically during
 loading). Two structural companions: a fresh command list is BORN RECORDING —
 Close it empty at creation or the first Reset fails silently forever; and
 the submit hook must run WITHOUT the frame mutex (the done-wait holds it —

@@ -90,8 +90,8 @@ decisivo (user): NR-off + cap 6-7 fps + paneo.
 ## Estado
 
 Build 0 warnings /W4 /WX; ctest 3/3 PASS; deploy 5/5 md5 OK (gamedir +
-build/deploy); commit `624ece6`; panel viejo (14712) muerto, panel nuevo
-PID 21088; RDR2 PID 13372 en menú esperando ENTER físico. ABI/ctl sin
+build/deploy); commit `624ece6`; old panel killed, new panel live;
+the game waiting at the menu for manual input. ABI/ctl sin
 cambios de layout (416 B). Worklog extendido: `worklog/04-new-sli/23-r82l-repaso-general.md`.
 
 ## Lecciones (skill actualizado)

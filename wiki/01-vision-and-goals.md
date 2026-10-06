@@ -48,7 +48,7 @@ control over every parameter.
    engine really receives / side effect of deviating).
 5. **A/B before believing** any hypothesis; measure in the regime where
    the problem is visible (a day A/B does not validate night).
-6. **Read the reference before theorizing** (OptiScanner-family sources
+6. **Read the reference before theorizing** (OptiScaler-family sources
    are on disk for contrast — the golden rule born from 5 avoidable
    crashes).
 

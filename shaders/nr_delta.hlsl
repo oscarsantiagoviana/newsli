@@ -85,7 +85,7 @@ float3 SanitizeFinite3(float3 v, float3 fallback)
     return r;
 }
 
-// GOLPE 4 (fork dlssnr.hlsl:459, hhkbble): scale a residual so
+// GOLPE 4 (fork dlssnr.hlsl:459): scale a residual so
 // fullProxy + edit cannot leave the unit cube, without changing its
 // direction. The peak channel that hits the wall first decides how far
 // the WHOLE edit travels — one scalar on the triple keeps hue.
@@ -140,8 +140,8 @@ void CSDecodeDelta(uint3 dtid : SV_DispatchThreadID)
     // DENOMINATOR (and the residual's fullProxy, and the VIEW payload)
     // move to the canonical domain the model's answer lives in. The old
     // plain Load left the proxy jittered while the answer was not: the
-    // whole output rippled at the Halton frequency (the "vista NR
-    // oscila" report). j==0 = the 4 taps collapse to the same texel —
+    // whole output rippled at the Halton frequency (a reported
+    // output ripple). j==0 = the 4 taps collapse to the same texel —
     // bit-exact POST-SR identity.
     float3 orig;
     {
@@ -304,8 +304,8 @@ void CSDecodeDelta(uint3 dtid : SV_DispatchThreadID)
     // reconstruction — the VIEW payload paints THIS. Post-golpe-4 the
     // view had switched to the reconstruction (fullProxy+edit), which
     // at ws<1 is the game frame re-seated at full res: visually
-    // indistinguishable from no-NR ("la vista NR ha dejado de
-    // funcionar", user 2026-10-04 noche). The view is a DIAGNOSTIC
+    // indistinguishable from no-NR (user report: the NR
+    // view appeared dead). The view is a DIAGNOSTIC
     // (what is the model doing) — it must show the model's own output.
     const float3 modelRaw = modelDisp;
     if (dResidual > 0.5 && modelRanSmall)

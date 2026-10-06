@@ -1471,7 +1471,7 @@ void RecordDepthCapture(const EvalArgs& a, ID3D12GraphicsCommandList* list)
     // R69t clone path, restored verbatim after the feeder refuted the R82f
     // poison verdict (worklog 36). The fallback (no depth / mode 1) ships
     // the flat 1.0 plane: COHERENT with depthInverted=1 (near = 1), fixing
-    // the zeros=far inconsistency the comparativa found.
+    // the zeros=far inconsistency the comparison test found.
     Session& s = g_s;
     SharedBuf& sb = s.guideD[s.frame % 3];
 
@@ -2937,8 +2937,8 @@ HRESULT PresentGateInner(IDXGISwapChain* real, UINT sync, UINT flags,
 
     // ---- cold start (R82): while the engine has NOT yet delivered its
     // FIRST delta, do not hold the game's Present thread hostage to the
-    // multi-second vendor warm-up (RDR2/EMP: a Present blocked for
-    // seconds ends in DEVICE_HUNG 0x887A0001 + an EMP.dll crash dump;
+    // multi-second vendor warm-up (a Present blocked for
+    // seconds can end in DEVICE_HUNG 0x887A0001 with a crash dump;
     // measured 22:38 session). Present native until the first produce
     // lands; the strict same-frame contract resumes from frame 2 on.
     if (s.gateLastDone == 0 && s.doneFence->GetCompletedValue() <= s.gateLastDone)

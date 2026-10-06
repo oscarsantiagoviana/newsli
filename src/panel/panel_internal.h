@@ -13,8 +13,8 @@
 // Design contract (docs/panel-spec.md, analysis/03):
 //  - ONE ControlSpec table drives rendering, ini keys, ctl fields, ranges,
 //    defaults and the always-visible help text. Adding a control = adding
-//    one table row; there are no parallel arrays to grow in lockstep (the
-//    POC's "TRAMPA PANEL": four index-parallel arrays that corrupted
+//    one table row; there are no parallel arrays to grow in lockstep (the POC's
+//    parallel-array trap: four index-parallel arrays that corrupted
 //    neighboring HWNDs the moment one grew alone). Row lookups go through
 //    IdOf(field)/KeyIdx(key), constexpr scans of the table, so even those
 //    cannot rot.
@@ -172,11 +172,11 @@ inline constexpr ControlSpec kSpecs[] =
       "parameter.",
       "With the pin open (below), lowering this is where the engine "
       "milliseconds actually drop. With the pin at 1.0 this dial is "
-      "DECORATIVE — the full-res pin cancels it (golpe 1b finding)." },
+      "DECORATIVE — the full-res pin cancels it (a measured finding)." },
     { "Scaling pin", "nrRatioPin", CTL_FIELD_NR_RATIOPIN, Ctrl::SliderF,
       0.0f, 1.5f, 0.0f, nullptr,
       "The model's work-resolution valve (DLSSNR.ScalingRatio). "
-      "0 = OPEN (default, golpe 1b): the model picks its own interior "
+      "0 = OPEN (default): the model picks its own interior "
       "resolution from Perf quality — this is where the speed lives. "
       "1.0 = classic: forced full resolution, the historical behavior "
       "that silently cancelled Perf quality.",
@@ -192,7 +192,7 @@ inline constexpr ControlSpec kSpecs[] =
       "automatically). CHECKED (1) = flat proxy always (the historical "
       "behavior before this knob existed).",
       "NR_DEPTHMODE live — takes effect on the next frame, no rebuild.",
-      "This is the golpe 2 lever: real depth should hold detail better in "
+      "This is the depth-source lever: real depth should hold detail better in "
       "motion. If the image degrades with it on, uncheck and report — that "
       "would be a finding, not a setting." },
     { "Residual compose", "nrResidual", CTL_FIELD_NR_RESIDUAL, Ctrl::Checkbox,

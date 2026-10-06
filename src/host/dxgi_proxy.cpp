@@ -1,9 +1,9 @@
-// dxgi_proxy — the load vector (ported from the POC, RDR2-proven):
-// OptiScaler (26 MB) and ReShade both lived in the dxgi.dll slot on RDR2
-// all week. Forwards every dxgi export to the real System32 dxgi and
-// lazily loads our nvngx.dll (the NGX host) on the game's thread at the
-// first dxgi call (EnsureHost — the old helper-thread preload was
-// replaced by this lazy load).
+// dxgi_proxy — the load vector (ported from the POC, game-proven):
+// the dxgi.dll slot is the standard local-mod load point (OptiScaler,
+// ReShade and similar tools use it). Forwards every dxgi export to the
+// real System32 dxgi and lazily loads our nvngx.dll (the NGX host) on
+// the game's thread at the first dxgi call (EnsureHost — the old
+// helper-thread preload was replaced by this lazy load).
 //
 // Why the early nvngx load: the NVIDIA driver preloads its DriverStore ngx
 // core into the game process by absolute path at device creation, so a
@@ -11,9 +11,8 @@
 // loads dxgi BEFORE creating the D3D12 device — our thread claims the
 // "nvngx.dll" name first, and the game's later resolution finds us.
 //
-// (The version.dll static-import slot does the same thing but RDR2's
-// protection fast-fails on it: 0xC0000409 in ucrtbase, twice, gone the
-// moment the file was removed. dxgi is dynamic and proven.)
+// (Static-import slots were tried and rejected — load-order and
+// crash-isolation reasons. The dynamic dxgi route is the proven vector.)
 //
 // R79 — the swapchain Present hook: the factory creators hand out a thin
 // IDXGISwapChain proxy (everything forwarded to the real object; only

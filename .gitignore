@@ -16,3 +16,7 @@ nvngx.dll_dlssnr.dll
 # NVIDIA proprietary NGX headers — same regime (README documents hashes
 # and where to get/place them); kept locally by each developer
 external/nvngx_dlss_sdk/
+# private research trees — internal analysis and round-by-round worklog;
+# NOT published (kept locally on master)
+analysis/
+worklog/

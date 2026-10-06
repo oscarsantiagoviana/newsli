@@ -141,7 +141,7 @@ que es lo que el path tint!=2 quiere); ahora lo EXPLICA el comentario.
 ## Siguiente: segunda auditoría (RENDIMIENTO)
 
 User midió 8→4-5 fps tras R89d (escena distinta también; GPU1 8%/750 MHz/
-26 W = juego CPU-bound). deleg_6f37e90b: 3 auditores (engine 113-130 ms/
+26 W = juego CPU-bound). a delegated audit: 3 auditores (engine 113-130 ms/
 frame desglose, host game-thread µs, transporte+knobs honestos). Vetas:
 LEY 1 (solo frames con NR; gate-wait = válvula existente), cero
 ghosting/flicker, calidad primero (LEY 2).

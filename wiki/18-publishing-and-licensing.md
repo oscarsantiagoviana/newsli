@@ -13,8 +13,8 @@ Detours (MIT) — each keeps its LICENSE file in tree.
   vendor NR runtime, model weights from NVIDIA DLLs — the USER provides
   them (from their driver/game/SDK). Releases ship code, never vendor
   binaries (the OptiScaler model).
-- No signature-bypass replication (the DLSS 3.7+ Artur/DLSS-Enabler
-  method): legally sensitive, and passthrough suffices for us.
+- No signature-bypass replication (as some third-party DLSS enablers
+  do): legally sensitive, and passthrough suffices for us.
 
 ## Attribution
 

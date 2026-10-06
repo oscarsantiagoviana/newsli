@@ -19,11 +19,10 @@
 
 ## The graph (own-weights era, for the record)
 
-19 layers / 71 blocks: Swin 1h→16h + split-Swin 16h + VIT (qkv/ffn/
-attention/projection), int4/int8-quantized weights, E4M3 publish
-semantics, approximated softmax, a swizzle tensor (device-side index
-cache needed under graph capture), quadratic gate. Full extraction and
-block-by-block notes: archived POC repos (05-historical-worklog R40-R62).
+A transformer-family architecture (multi-stage attention + vision
+blocks), quantized for tensor-core execution; reconstructed during the
+retired own-weights line for validation purposes (no weights or notes
+on the reconstruction are published).
 
 ## Codec around the model (what new-sli implements)
 

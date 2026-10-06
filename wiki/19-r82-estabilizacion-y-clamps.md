@@ -5,13 +5,13 @@ Fecha: 2026-09-29/30 (noche). Commit `942d66e`. Deploy verificado (hashes OK).
 ## Contexto
 
 El user reporta "última modificación dio error y el juego se paró". La sesión 22:38
-murió: 1 evaluate → compose #1 → device removed 0x887A0001 → RDR2.exe AV en
-EMP.dll+0x21939 (anti-tamper) → cascada (engine poison, dumps).
+murió: 1 evaluate → compose #1 → device removed 0x887A0001 → crash del juego en
+su módulo anti-tamper → cascada (engine poison, dumps).
 
 ## Diagnóstico (evidencia, no conjeturas)
 
-1. **Dump del juego (173 MB, RDR2.exe.25056.dmp)**: AV write en EMP.dll+0x21939 —
-   mismo offset que los WER de 21:19 y 21:22 (misma firma fe019ccc). EMP muriendo
+1. **Dump del juego (173 MB)**: AV write dentro del módulo anti-tamper, mismo
+   offset que los WER previos de 21:19 y 21:22 (misma firma). El anti-tamper muriendo
    con el proceso, no el asesino.
 2. **Cronología fina del host log**: produce 1 a las 21.607 → EnsureStruct falla
    0x887A0005 a las 25.107 (el device YA estaba muerto; los creates devuelven
@@ -66,8 +66,8 @@ negros por división ruidosa). Después: acotado y sin outliers.
 - **Sesgo azul del modelo** (-15% B sistemático en los captures NOC): el
   taper de croma al 25% lo deja en ~4% efectivo; con boost=1 casi invisible.
   Investigar si es matriz de primarios del runtime vendor (P3).
-- **Verificación live**: bloqueada autónomamente — el menú de RDR2 ignora
-  input sintético (SendInput/PostMessage/cua-driver; EMP lo filtra). El juego
+- **Verificación live**: bloqueada autónomamente — el menú del juego ignora
+  input sintético (el anti-tamper lo filtra). El juego
   quedó lanzado en el menú principal esperando Enter humano.
 - EnsureStruct sigue lazily-fail-soft (tint=2 funcional pero su RS falla si el
   device murió; con el cold-start ya no corre en ventana crítica).

@@ -1,4 +1,4 @@
-# 28 — Segunda auditoría fps/latencia (deleg_6f37e90b) y plan R90
+# 28 — Segunda auditoría fps/latencia (a delegated three-way audit) y plan R90
 
 Fecha: 2026-10-03. 3 auditores (ENGINE / HOST / TRANSPORTE+ABI+PANEL), solo lectura.
 Reglas grabadas en las misiones: LEY 1 (mismo frame, nunca stale), LEY 2 (calidad),
