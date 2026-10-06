@@ -5,7 +5,7 @@ present, compare face/skin handling vs reference projects, then implement
 multipass. Special attention to how frames are treated, aligned, accumulated
 ("we suspect failures in the capture or output chain").
 
-## What was verified (evidence in `analysis/2026-09-29_audit-cadena-tiempo-captura-compose.md`)
+## What was verified (forensic evidence gathered during the audit)
 
 | # | Point | Verdict |
 |---|-------|---------|

@@ -1,4 +1,4 @@
-> Design document for the new-sli panel (from analysis/03, reviewed and
+> Design document for the new-sli panel (reviewed and
 > adopted). The panel ships as Dear ImGui (Win32+DX11 backend, vendored MIT)
 > with a SINGLE ControlSpec table — no parallel HWND arrays (the POC's
 > TRAMPA PANEL: every array had to grow together with NPARAMS or memory
@@ -6,7 +6,7 @@
 
 # 03 — Panel de control (coproc_panel.cpp): anatomía + rediseño UX para new-sli
 
-Fuente: `poc-sr-offload-host/engine/coproc_panel.cpp` (681 líneas, v2.6), `engine/coproc_ctl_common.h` (protocolo ctl v2.5, single-sourced) y `host/offload_host.cpp` (`CtlPollThread` L453–604, `HotkeyThread` L639–712 spawn Ctrl+F9, `CtlLoadIni` L748+). El objetivo del nuevo proyecto (`new-sli`) es publicación: **código e UI en inglés**, sin dependencias externas.
+Fuente: el POC de offload (árbol privado, no publicado): panel v2.6, protocolo ctl v2.5 single-sourced, hilo de poll del host. El objetivo del nuevo proyecto (`new-sli`) es publicación: **código e UI en inglés**, sin dependencias externas.
 
 ---
 

@@ -4,7 +4,7 @@ Map of each new-sli engine file to its POC source
 (the working SR-offload POC's `engine/` tree).
 Line numbers are POC lines. "Kept" = ported logic; "Deleted" = deliberately
 dropped per the design changes (delta-only output, no badge, no CPU echo
-bridge); see `analysis/02-engine-analysis.md` for the full deletion list.
+bridge).
 
 ## src/engine/engine_ctx.h ← engine/coproc_engine.h (92 LOC)
 

@@ -1,7 +1,7 @@
 # Final-resolution delivery, transport, and the SR/FG roadmap
 
 Consolidated plan (2026-10-01) after the full reference study
-(`analysis/estudio-uncanny-neurotic-sr-fg-sdk-2026-10-01.md`, OptiScaler
+(the reference-projects study, OptiScaler
 upstream/Aurora code map, UNCANNY v0.20 docs, NeuRotic design docs) plus
 our own measurements. Sources verified on disk; licenses checked in git
 history, not assumed.

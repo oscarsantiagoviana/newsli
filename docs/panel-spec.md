@@ -1,6 +1,6 @@
 # Panel implementation spec (F4) — ControlSpec single table
 
-Derived from analysis/03 (adopted design). The panel is Dear ImGui
+Adopted design. The panel is Dear ImGui
 (Win32+DX11 backend, vendored). ONE ControlSpec table drives HWND-free
 rendering, ini keys, ctl fields, ranges, defaults and the ALWAYS-VISIBLE
 help text. No parallel arrays anywhere.

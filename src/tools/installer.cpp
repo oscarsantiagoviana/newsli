@@ -4,13 +4,14 @@
 // button and a live log. It writes the deployables (dxgi.dll, nvngx.dll,
 // sli_engine.exe, sli_panel.exe, sli_ctl.exe and the default sli.ini)
 // into the chosen game folder, writes an uninstaller
-// (uninstall_sli.exe) plus a per-user Add/Remove-Programs entry, and
-// copies the vendor NR runtime when it travels beside the installer.
+// (uninstall_sli.exe), and copies the vendor NR runtime when it
+// travels beside the installer.
 //
-// WHAT IT DOES NOT DO: no admin rights, no registry beyond the ARP entry
-// (HKCU — per-user), no services. Everything lands in ONE folder the
-// user picked; uninstall deletes exactly the files the manifest lists
-// (never anything it did not deploy).
+// ZERO TRACE: no admin rights, no registry, no services, no remembered
+// state. Everything lands in ONE folder the user picked; uninstall
+// deletes exactly the files the manifest lists (never anything it did
+// not deploy) and then removes itself — after a full install/uninstall
+// cycle nothing of new-sli remains on the system.
 //
 // The payload is embedded via the generated resource file (build/
 // installer_payload.rc) except the ~165 MB vendor runtime, which is
@@ -126,34 +127,11 @@ bool FileExists(const std::wstring& p)
 }
 
 // ---------------------------------------------------------------------------
-// Add/Remove Programs (per-user, HKCU) — the ONLY registry we touch
+// ZERO TRACE by design: no registry writes, no system folders, no
+// remembered state outside the target folder. Everything the installer
+// touches lives in the ONE folder the user picked, and uninstall removes
+// exactly that (the manifest lists every deployed file).
 // ---------------------------------------------------------------------------
-const wchar_t* kArpKey =
-    L"Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\new-sli";
-
-void RegSetStr(HKEY k, const wchar_t* name, const std::wstring& v)
-{
-    RegSetValueExW(k, name, 0, REG_SZ, (const BYTE*) v.c_str(),
-                   (DWORD) ((v.size() + 1) * sizeof(wchar_t)));
-}
-
-void WriteArpEntry(const std::wstring& dir)
-{
-    HKEY k = nullptr;
-    if (RegCreateKeyExW(HKEY_CURRENT_USER, kArpKey, 0, nullptr, 0,
-                        KEY_WRITE, nullptr, &k, nullptr) != ERROR_SUCCESS)
-        return;
-    RegSetStr(k, L"DisplayName",     L"new-sli (DLSS-NR offload)");
-    RegSetStr(k, L"DisplayVersion",  L"0.1.0");
-    RegSetStr(k, L"InstallLocation", dir);
-    RegSetStr(k, L"UninstallString", dir + L"\\uninstall_sli.exe");
-    RegSetStr(k, L"DisplayIcon",     dir + L"\\sli_panel.exe");
-    RegSetStr(k, L"Publisher",       L"new-sli contributors");
-    const DWORD one = 1;
-    RegSetValueExW(k, L"NoModify", 0, REG_DWORD, (const BYTE*) &one, 4);
-    RegSetValueExW(k, L"NoRepair", 0, REG_DWORD, (const BYTE*) &one, 4);
-    RegCloseKey(k);
-}
 
 // ---------------------------------------------------------------------------
 // manifest: exactly what we deployed (uninstall deletes ONLY this)
@@ -226,7 +204,6 @@ int DoInstall(const std::wstring& dir)
         m += a; m += "\n";
     }
     WriteAllBytes(ManifestPath(dir), m.c_str(), m.size());
-    WriteArpEntry(dir);
 
     Log("");
     Log("DONE. The deployables live next to the game's exe.");
@@ -276,7 +253,6 @@ int DoUninstall(const std::wstring& dir)
         // already-gone files (previous partial uninstall) are fine
     }
     DeleteFileW(ManifestPath(dir).c_str());
-    RegDeleteTreeW(HKEY_CURRENT_USER, kArpKey);
     char msg[256];
     _snprintf_s(msg, sizeof(msg), _TRUNCATE,
                 "Removed %d file(s).%s", removed,
@@ -287,6 +263,35 @@ int DoUninstall(const std::wstring& dir)
                     MB_OK | (failed ? MB_ICONWARNING : MB_ICONINFORMATION));
     else
         printf("uninstall: %s\n", msg);
+    // ZERO TRACE: the uninstaller removes ITSELF last. A running exe
+    // cannot delete its own file directly, so it relaunches cmd with a
+    // one-liner that waits for this process to exit and then deletes it.
+    // (Only the DEPLOYED copy — the smoke gate runs install+uninstall
+    // from the build-tree exe and must survive its own test.)
+    if (failed == 0)
+    {
+        wchar_t self[MAX_PATH] = {};
+        GetModuleFileNameW(nullptr, self, MAX_PATH);
+        const wchar_t* base = wcsrchr(self, L'\\');
+        base = base ? base + 1 : self;
+        if (wcscmp(base, L"uninstall_sli.exe") == 0)
+        {
+        wchar_t cmd[MAX_PATH + 64] = {};
+        _snwprintf_s(cmd, _countof(cmd), _TRUNCATE,
+                     L"/c timeout /t 2 /nobreak >nul & del \"%s\"", self);
+        STARTUPINFOW si = { sizeof(si) };
+        si.dwFlags = STARTF_USESHOWWINDOW;
+        si.wShowWindow = SW_HIDE;
+        PROCESS_INFORMATION pi = {};
+        if (CreateProcessW(L"C:\\Windows\\System32\\cmd.exe", cmd,
+                           nullptr, nullptr, FALSE, CREATE_NO_WINDOW,
+                           nullptr, dir.c_str(), &si, &pi))
+        {
+            CloseHandle(pi.hProcess);
+            CloseHandle(pi.hThread);
+        }
+        }
+    }
     return failed ? 1 : 0;
 }
 
@@ -424,11 +429,7 @@ int WINAPI wWinMain(HINSTANCE inst, HINSTANCE, PWSTR cmdLine, int)
                          LBS_NOINTEGRALHEIGHT | WS_VSCROLL, 16, 110, 544,
                          260, gwnd, nullptr, inst, nullptr);
 
-    // remember the last folder (beside the installer's own exe)
-    wchar_t def[MAX_PATH] = {};
-    GetPrivateProfileStringW(L"sli_installer", L"lastDir", L"", def,
-                             MAX_PATH, L".\\sli_installer.ini");
-    if (def[0]) SetWindowTextW(gdir, def);
+    // (zero-trace: no last-folder memory is read or written)
 
     ShowWindow(gwnd, SW_SHOW);
     MSG msg;
@@ -441,10 +442,6 @@ int WINAPI wWinMain(HINSTANCE inst, HINSTANCE, PWSTR cmdLine, int)
         }
     }
 
-    wchar_t dir[MAX_PATH] = {};
-    GetWindowTextW(gdir, dir, MAX_PATH);
-    WritePrivateProfileStringW(L"sli_installer", L"lastDir", dir,
-                               L".\\sli_installer.ini");
     CoUninitialize();
     return 0;
 }

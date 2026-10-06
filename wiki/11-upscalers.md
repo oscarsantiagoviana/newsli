@@ -14,7 +14,7 @@ with a factory keyed by enum, exactly the pattern OptiScaler uses —
 re-implemented, not copied (GPL).
 
 Candidates and what running them needs (catalog with sources:
-analysis/05-algorithms-catalog.md):
+the algorithms catalog of the reference projects):
 
 | Backend | Vendor need | Entry | Status |
 |---|---|---|---|

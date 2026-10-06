@@ -3,7 +3,7 @@
 ## Near (roadmap phases)
 
 - **F2-F4**: engine delta-only, host FSM, panel v3 (see
-  analysis/08-execution-plan.md for gates).
+  the execution plan for gates).
 - **F5**: publish pass — visual verification in a presenter game (CS2).
 
 ## Backends (F6)

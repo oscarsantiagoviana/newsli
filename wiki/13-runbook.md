@@ -2,6 +2,17 @@
 
 ## Deploy (game dir)
 
+Two ways:
+
+**Installer (recommended)** — `sli_installer.exe`: pick the game's
+folder, Install. It writes the deployables + a default `sli.ini` (never
+clobbering a tuned one) + `uninstall_sli.exe`, and copies the vendor
+runtime when it travels beside the installer. Zero trace: no registry,
+no Add/Remove-Programs entry, nothing outside the chosen folder. Uninstall
+removes exactly what the manifest lists and then deletes itself.
+
+**Manual**:
+
 1. Close the game (files lock while running).
 2. Copy `dxgi.dll`, `nvngx.dll`, `sli_engine.exe`, `sli_panel.exe`,
    `sli_ctl.exe` next to the game executable.

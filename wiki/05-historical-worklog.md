@@ -1,11 +1,11 @@
-> Verbatim from analysis/04-worklog-en.md — the consolidated history of the
-> POC projects (poc-sr-offload-host + poc-dlss-standalone, 2026-09-20 → 09-28).
+> The consolidated history of the POC phase (two private research
+> repos, 2026-09-20 → 09-28).
 > This page is the canonical historical record; other wiki pages link to
 > rounds here instead of repeating them.
 
 # Historical Worklog (R1 - R73c) - Offloading DLSS SR + NR to a Second GPU
 
-Consolidated from: worklogs R18-R63 in poc-sr-offload-host/docs, wiki 01-15 of poc-dlss-standalone (05-historial covers R53-R73c), and the git history of both repos (81 + 37 commits). Testbed: 2x RTX 3060 12 GB (sm_86/Ampere, no native E4M3 tensor cores), driver 616.64, Windows 10 19044. Game: RDR2 2560x1080, DRS active, render ~853x360 (DLSS Performance x3). Fidelity reference = vendor eager fp32 path, bit-exact vs the NVIDIA DLL. Rounds without a written worklog (R1-R17, R24-R29, R47-R63 partial) are reconstructed from git and later references.
+Consolidated from the round notes and git history of both private POC repos. Testbed: 2x RTX 3060 12 GB (sm_86/Ampere, no native E4M3 tensor cores), driver 616.64, Windows 10 19044. Game: RDR2 2560x1080, DRS active, render ~853x360 (DLSS Performance x3). Fidelity reference = vendor eager fp32 path, bit-exact vs the NVIDIA DLL. Rounds without a written worklog (R1-R17, R24-R29, R47-R63 partial) are reconstructed from git and later references.
 
 ## Key measured numbers (RTX 3060 GPU1 unless noted)
 

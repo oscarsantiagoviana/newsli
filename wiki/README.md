@@ -27,4 +27,4 @@
 | 23 | [r84-ghost-round](23-r84-ghost-round.md) | **filled** |
 
 Status legend: draft = placeholder to be filled at the phase that owns it
-(see analysis/08-execution-plan.md §2).
+(see the execution plan).

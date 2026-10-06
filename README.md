@@ -114,8 +114,7 @@ our own terms and is MIT here).
 1. Close the game.
 2. Build (see below) or get a release, and run `sli_installer.exe`:
    pick the game's folder, Install. It writes the deployables, a default
-   `sli.ini` (never clobbering a user-tuned one), an uninstaller and an
-   Add/Remove-Programs entry.
+   `sli.ini` (never clobbering a user-tuned one) and an uninstaller.
 3. Put the two NVIDIA runtime DLLs beside the installer before
    installing (or copy them next to the game's exe afterwards).
 4. Launch the game, launch `sli_panel.exe`.
@@ -126,8 +125,10 @@ our own terms and is MIT here).
    right — the honest in-game A/B.
 6. `sli_ctl.exe` (CLI) mirrors every live value.
 
-Uninstall: `uninstall_sli.exe` in the game folder, or the Windows
-Add/Remove-Programs entry — both remove exactly what was deployed.
+**Zero trace**: the installer writes nothing outside the chosen folder
+— no registry, no Add/Remove-Programs entry, no remembered state. Uninstall:
+`uninstall_sli.exe` in the game folder removes exactly what was deployed
+and then deletes itself; after a full cycle nothing remains.
 
 ## Keep in mind
 
