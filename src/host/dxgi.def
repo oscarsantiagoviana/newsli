@@ -1,0 +1,25 @@
+; dxgi.def — publishes the fwd_* forwarders under the real dxgi.dll API
+; names (the full export set of Win10 19044's System32 dxgi.dll, verified
+; with dumpbin). Identical behavior to the system dll; the nvngx.dll load
+; itself happens lazily in EnsureHost (dxgi_proxy.cpp).
+LIBRARY dxgi
+EXPORTS
+    ApplyCompatResolutionQuirking  = fwd_ApplyCompatResolutionQuirking
+    CompatString                   = fwd_CompatString
+    CompatValue                    = fwd_CompatValue
+    CreateDXGIFactory              = fwd_CreateDXGIFactory
+    CreateDXGIFactory1             = fwd_CreateDXGIFactory1
+    CreateDXGIFactory2             = fwd_CreateDXGIFactory2
+    DXGID3D10CreateDevice          = fwd_DXGID3D10CreateDevice
+    DXGID3D10CreateLayeredDevice   = fwd_DXGID3D10CreateLayeredDevice
+    DXGID3D10GetLayeredDeviceSize  = fwd_DXGID3D10GetLayeredDeviceSize
+    DXGID3D10RegisterLayers        = fwd_DXGID3D10RegisterLayers
+    DXGIDeclareAdapterRemovalSupport = fwd_DXGIDeclareAdapterRemovalSupport
+    DXGIDumpJournal                = fwd_DXGIDumpJournal
+    DXGIGetDebugInterface1         = fwd_DXGIGetDebugInterface1
+    DXGIReportAdapterConfiguration = fwd_DXGIReportAdapterConfiguration
+    PIXBeginCapture                = fwd_PIXBeginCapture
+    PIXEndCapture                  = fwd_PIXEndCapture
+    PIXGetCaptureStatus            = fwd_PIXGetCaptureStatus
+    SetAppCompatStringPointer      = fwd_SetAppCompatStringPointer
+    UpdateHMDEmulationStatus       = fwd_UpdateHMDEmulationStatus

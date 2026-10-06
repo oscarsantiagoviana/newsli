@@ -1,0 +1,18 @@
+build/
+build-dbg/
+deploy/
+logtest/
+*.log
+*.log.*
+*.dmp
+*.rgba16f
+feeder_delta_*
+# local build helpers with personal paths (keep out of the public tree)
+build_env.bat
+build_r92.bat
+# vendor runtime (user-provided, never distributed)
+nvngx_dlssnr.dll
+nvngx.dll_dlssnr.dll
+# NVIDIA proprietary NGX headers — same regime (README documents hashes
+# and where to get/place them); kept locally by each developer
+external/nvngx_dlss_sdk/

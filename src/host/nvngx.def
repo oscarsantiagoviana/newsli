@@ -1,0 +1,78 @@
+; nvngx.def — the proxy's export table (F3).
+; The D3D12 family is implemented in nvngx_host.cpp (the names declared by
+; nvsdk_ngx.h carry C linkage there). CUDA / VULKAN / D3D11 / OTA names all
+; alias the one ABI-safe stub — this stack is D3D12-only and the stub logs
+; loudly the first time one is actually called.
+LIBRARY nvngx
+EXPORTS
+    ; ---- D3D12: the real path ----
+    NVSDK_NGX_D3D12_Init
+    NVSDK_NGX_D3D12_Init_Ext
+    NVSDK_NGX_D3D12_Init_ProjectID
+    NVSDK_NGX_D3D12_Init_with_ProjectID
+    NVSDK_NGX_D3D12_Shutdown
+    NVSDK_NGX_D3D12_Shutdown1
+    NVSDK_NGX_D3D12_CreateFeature
+    NVSDK_NGX_D3D12_ReleaseFeature
+    NVSDK_NGX_D3D12_EvaluateFeature
+    NVSDK_NGX_D3D12_EvaluateFeature_C
+    NVSDK_NGX_D3D12_GetCapabilityParameters
+    NVSDK_NGX_D3D12_GetParameters
+    NVSDK_NGX_D3D12_AllocateParameters
+    NVSDK_NGX_D3D12_DestroyParameters
+    NVSDK_NGX_D3D12_GetScratchBufferSize
+    NVSDK_NGX_D3D12_GetFeatureRequirements
+    NVSDK_NGX_UpdateFeature
+    ; ---- stubs ----
+    NVSDK_NGX_CUDA_Init                 = Host_Unsupported_Family
+    NVSDK_NGX_CUDA_Init_Ext             = Host_Unsupported_Family
+    NVSDK_NGX_CUDA_Init_ProjectID       = Host_Unsupported_Family
+    NVSDK_NGX_CUDA_Init_with_ProjectID  = Host_Unsupported_Family
+    NVSDK_NGX_CUDA_Shutdown             = Host_Unsupported_Family
+    NVSDK_NGX_CUDA_CreateFeature        = Host_Unsupported_Family
+    NVSDK_NGX_CUDA_ReleaseFeature       = Host_Unsupported_Family
+    NVSDK_NGX_CUDA_EvaluateFeature      = Host_Unsupported_Family
+    NVSDK_NGX_CUDA_GetCapabilityParameters = Host_Unsupported_Family
+    NVSDK_NGX_CUDA_GetParameters        = Host_Unsupported_Family
+    NVSDK_NGX_CUDA_AllocateParameters   = Host_Unsupported_Family
+    NVSDK_NGX_CUDA_DestroyParameters    = Host_Unsupported_Family
+    NVSDK_NGX_CUDA_GetScratchBufferSize = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_Init                = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_Init_Ext            = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_Init_ProjectID      = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_Init_with_ProjectID = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_Shutdown            = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_Shutdown1           = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_CreateFeature       = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_ReleaseFeature      = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_EvaluateFeature     = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_EvaluateFeature_C   = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_GetCapabilityParameters = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_GetParameters       = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_AllocateParameters  = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_DestroyParameters   = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_GetScratchBufferSize = Host_Unsupported_Family
+    NVSDK_NGX_D3D11_GetFeatureRequirements = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_Init               = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_Init_Ext           = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_Init_ProjectID     = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_Init_with_ProjectID = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_Shutdown           = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_Shutdown1          = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_CreateFeature      = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_CreateFeature1     = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_ReleaseFeature     = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_EvaluateFeature    = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_EvaluateFeature_C  = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_GetCapabilityParameters = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_GetParameters      = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_AllocateParameters = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_DestroyParameters  = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_GetScratchBufferSize = Host_Unsupported_Family
+    NVSDK_NGX_VULKAN_RequiredExtensions = Host_Unsupported_Family
+    NVSDK_NGX_OTA_UPDATES_CheckForUpdate = Host_Unsupported_Family
+    NVSDK_NGX_OTA_UPDATES_GetPath       = Host_Unsupported_Family
+    NVSDK_NGX_OTA_UPDATES_Install       = Host_Unsupported_Family
+    NVSDK_NGX_OTA_UPDATES_Register      = Host_Unsupported_Family
+    NVSDK_NGX_OTA_UPDATES_Unregister    = Host_Unsupported_Family
+    NVSDK_NGX_OTA_UPDATES_Update        = Host_Unsupported_Family
